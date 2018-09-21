@@ -2,9 +2,10 @@ hasTheSymptom(Disease,Symptom) :- indicatesTheDisease(Symptom,Disease).
 
 hasTheSymptom(房间隔缺损,火柴梗征).
 hasTheSymptom(二尖瓣狭窄,城墙样改变).
+hasTheSymptom(胰头癌,库瓦西耶征).
 
 symptom(发热).
-symptom(寒战)
+symptom(寒战).
 symptom(结膜充血).
 symptom(单纯疱疹).
 symptom(淋巴结肿大).
@@ -40,8 +41,6 @@ includes(发热,间歇热).
 includes(发热,波状热).
 includes(发热,回归热).
 includes(发热,不规则热).
-
-hasTheSymptom(胰头癌,库瓦西耶征).
 
 hasTheContraindication(增强CT,碘过敏).
 hasTheContraindication(青霉素,青霉素过敏).
