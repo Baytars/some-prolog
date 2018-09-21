@@ -1,0 +1,72 @@
+#!/bin/bash
+should_exit=false
+predicate=''
+verbose=''
+code=''
+input_success=true
+
+process(){
+    case $3 in
+        属于)
+            predicate="belongs_to"
+            verbose="belongs to"
+        ;;
+        是一种)
+            predicate="belongs_to"
+            verbose="belongs to"
+        ;;
+        通往)
+            predicate="connect"
+            verbose="leads to"
+        ;;
+        *)
+            input_success=false
+            predicate="<Unknown>"
+            verbose="(Unknown Phrase)"
+        ;;
+    esac
+
+    if [ $input_success = true ]; then
+        echo -e "\nDone! Check my translation:"
+    else
+        echo -e "\nERROR! Check my translation:"
+    fi
+
+    code="$predicate('$2','$4')."
+
+    echo -e "\n     CODE  : $code\n    VERBOSE: $2 $verbose $4\n"
+
+    if [ $input_success = true ]; then
+        echo $code >> ./$1.pl
+    else
+        input_success=true
+    fi
+
+    # clean
+    predicate=''
+    verbose=''
+
+    echo "Continue ..."
+
+}
+
+echo "Hi! Which database would you like to enrich?"
+printf ">> "
+read target_db
+if [ ! -f "./$target_db.pl" ]; then
+    echo "Database not found."
+else
+    echo "Battle Station. In position."
+    while [ $should_exit = false ]; do
+        printf "> "
+        read sentence
+        case $sentence in
+            halt)
+                should_exit=true
+            ;;
+            *)
+                process $target_db $sentence
+            ;;
+        esac
+    done
+fi
